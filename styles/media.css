@@ -1,0 +1,14 @@
+@media only screen and (max-width: 768px) {
+    body {
+        background-color: lightblue;
+    }
+
+    .container {
+        flex-direction: column;
+    }
+
+    .menu__link {
+        padding: 12px;
+        margin: 10px;
+    }
+}

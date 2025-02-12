@@ -1,0 +1,60 @@
+/* Контейнер-обертка */
+.container {
+    max-width: 1440px;
+    margin: 0 auto;
+}
+
+/* Заголовки */
+.header__title {
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 29px;
+    color: white;     
+}
+
+/* Кнопки */
+.header__menu {
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 28px;
+    color:black;
+    
+    
+    cursor: pointer;
+}
+
+.popular__link{
+    color: black;
+    background-color:white;
+    min-height: 60px;
+    padding : 12px 20px;
+}
+.header__login{
+    color: black;
+    background-color:white;
+    padding: 15px;
+    margin: 20px;
+}
+.about__catalog{
+    color: black;
+    background-color:white;
+    min-height: 60px;
+    padding : 12px 20px;
+}
+.form__input{
+    color: black;
+    background-color:white;
+    min-height: 60px;
+    padding : 12px 20px;
+}
+.form__button{
+    color: black;
+    background-color:white;
+    min-height: 60px;
+    padding : 12px 20px;
+}
+
+
+
+
+
