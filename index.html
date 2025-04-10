@@ -45,9 +45,20 @@
         </section>
 
         <section class="popular">
-                <h3 class="popular__title">ПОПУЛЯРНЫЕ МАРШРУТЫ</h3> 
-                <button class="popular__link" type="marshrut.html">Смотреть все</button>
-            <ul class="popular__list">
+                <h3 class="popular__title">ПОПУЛЯРНЫЕ МАРШРУТЫ</h3>
+                
+                <div class="popular__carousel">
+                    <button class="carousel__button carousel__button--prev">←</button>
+                    <div class="carousel__container">
+                        <div class="carousel__track"><!-- через JS -->   
+                        </div>
+                    </div>
+                    <button class="carousel__button carousel__button--next">→</button>
+                </div>
+                
+                <!-- <button class="popular__link" type="marshrut.html">Смотреть все</button> -->
+                <button class="popular__link" type="button">Смотреть все</button>
+            <ul class="popular__list" id="popular-list">
                 <li class="popular__item">
                     <a class="popular__name" href="#">Дорога к облакам – маршрут по горным вершинам Кавказа.</a>
                     <p class="popular__country" >Страна: Россия</p>
@@ -61,7 +72,7 @@
                     <p class="popular__country" >Страна: Норвегия, Дания, Швеция</p>
                     <p class="popular__price" >Стоимость: 200 000 руб.</p>
                     <p class="popular__date" >Дата: 28.12.2025</p>
-                    <img class="popular__img" src="images/severnoesianie.jpg" alt="Скандинавия" width="270">
+                    <img class="popular__img" src="images/copySeverSi.jpg" alt="Скандинавия" width="270">
                 </li>
 
                 <li class="popular__item">
