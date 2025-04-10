@@ -12,3 +12,5 @@
 @import "typography.css";
 /*Подключение адаптации под мобильные устройства*/
 @import "media.css";
+/*Подключение модального окна*/
+@import "modalWindow.css";
