@@ -3,29 +3,122 @@
 document.addEventListener("DOMContentLoaded", () => {
     console.log('Скрипт отработал корректно');
 
-    // Создаем массив с названиями popular__name в порядке их следования в HTML
-    const popularNames = [
-        "Дорога к облакам – маршрут по горным вершинам Кавказа.",
-        "В поисках Северного сияния – путешествие по северу Скандинавии.",
-        "Путь шаманов – этнографический тур по Сибири.",
-        "Тропой древних цивилизаций – исторический маршрут по Греции и Италии.",
-        "Сказки Востока – культурное погружение в страны Средней Азии.",
-        "По следам викингов – морской круиз вдоль берегов Норвегии.",
-        "Тайны Атлантиды – подводные экскурсии у берегов Карибских островов.",
-        "Сокровища пустыни – сафари-тур по Сахаре."
+    // Создаем массив с текстами пунктов меню
+    const menuItems = [
+        "О нас",
+        "Контакты",
+        "Путешествия",
+        "Направления",
+        "Туры"
     ];
 
-    // Получаем все элементы popular__item
-    const popularItem = document.querySelectorAll('.popular__item');
+    const menuContainer = document.querySelector('.menu');
 
-    // Проходим по массиву и заполняем карточки через for
-    for (let i = 0; i < popularItem.length; i++) {
-        const item = popularItem[i];
-        const nameElement = item.querySelector('.popular__name');
-        
-        // Устанавливаем текст из массива
-        if (nameElement && popularNames[i]) {
-            nameElement.textContent = popularNames[i];
+    if (menuContainer) {
+        // Заполняем меню
+        for (let i = 0; i < menuItems.length; i++) {
+            // Определяем, активный ли это пункт (первый пункт активный)
+            const isActive = i === 0 ? 'menu_item--active' : '';
+            
+            // шаблон разметки
+            const menuItem = `
+                <li class="menu__item ${isActive}">
+                    <a class="menu__link" href="#">${menuItems[i]}</a>
+                </li>
+            `;
+                    
+            menuContainer.innerHTML += menuItem;// Добавляем пункт в меню
+        }
+    }
+
+    const popularItemsData = {//объекты
+        item1: {
+            name: 'Дорога к облакам – маршрут по горным вершинам Кавказа.',
+            country: 'Россия',
+            price: '50 000 руб.',
+            date: '5.05.2025',
+            image: 'images/kavkaz.jpeg',
+            alt: 'Кавказ'
+        },
+        item2: {
+            name: 'В поисках Северного сияния – путешествие по северу Скандинавии.',
+            country: 'Норвегия, Дания, Швеция',
+            price: '200 000 руб.',
+            date: '28.12.2025',
+            image: 'images/severnoesianie.jpg',
+            alt: 'Скандинавия'
+        },
+        item3: {
+            name: 'Путь шаманов – этнографический тур по Сибири.',
+            country: 'Россия',
+            price: '70 000 руб.',
+            date: '03.03.2025',
+            image: 'images/Sibir.webp',
+            alt: 'Сибирь'
+        },
+        item4: {
+            name: 'Тропой древних цивилизаций – исторический маршрут по Греции и Италии.',
+            country: 'Греция, Италия',
+            price: '400 000 руб.',
+            date: '06.06.2025',
+            image: 'images/italy.webp',
+            alt: 'Италия'
+        },
+        item5: {
+            name: 'Сказки Востока – культурное погружение в страны Средней Азии.',
+            country: 'Казахстан',
+            price: '100 000 руб.',
+            date: '08.08.2025',
+            image: 'images/kazakhstan.jpeg',
+            alt: 'Казахстан'
+        },
+        item6: {
+            name: 'По следам викингов – морской круиз вдоль берегов Норвегии.',
+            country: 'Норвегия',
+            price: '150 000 руб.',
+            date: '10.10.2025',
+            image: 'images/norvegia.jpg',
+            alt: 'викинг'
+        },
+        item7: {
+            name: 'Тайны Атлантиды – подводные экскурсии у берегов Карибских островов.',
+            country: 'Куба',
+            price: '300 000 руб.',
+            date: '09.09.2025',
+            image: 'images/karybi.jpg',
+            alt: 'Куба'
+        },
+        item8: {
+            name: 'Сокровища пустыни – сафари-тур по Сахаре.',
+            country: 'Марокко',
+            price: '200 000 руб.',
+            date: '02.02.2025',
+            image: 'images/sahara.jpg',
+            alt: 'сахара'
+        }
+    };
+    
+    const tourTemplate = (item) => {// Шаблон для создания popular__item
+        return `
+            <li class="popular__item">
+                <a class="popular__name" href="#">${item.name}</a>
+                <p class="popular__country">Страна: ${item.country}</p>
+                <p class="popular__price">Стоимость: ${item.price}</p>
+                <p class="popular__date">Дата: ${item.date}</p>
+                <img class="popular__img" src="${item.image}" alt="${item.alt}" width="270">
+            </li>
+        `;
+    };
+
+    const popularList = document.querySelector('.popular__list');
+
+    if (popularList) {      
+        // Заполняем 
+        for (const key in popularItemsData) {
+            if (popularItemsData.hasOwnProperty(key)) {
+                const item = popularItemsData[key];
+                popularList.innerHTML += tourTemplate(item);
+            }
         }
     }
        
