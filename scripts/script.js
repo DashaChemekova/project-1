@@ -3,113 +3,30 @@
 document.addEventListener("DOMContentLoaded", () => {
     console.log('Скрипт отработал корректно');
 
-    // Массив объектов с данными для популярных туров
-    // Храним не просто какие-то отдельные поля туров, а туры полностью со всеми данными
-    const toursData = [
-        {
-            name: 'Дорога к облакам – маршрут по горным вершинам Кавказа.',
-            country: 'Россия',
-            price: '50 000 руб.',
-            date: '5.05.2025',
-            imgSrc: 'images/kavkaz.jpeg',
-            imgAlt: 'Кавказ'
-        },
-        {
-            name: 'В поисках Северного сияния – путешествие по северу Скандинавии.',
-            country: 'Норвегия, Дания, Швеция',
-            price: '200 000 руб.',
-            date: '28.12.2025',
-            imgSrc: 'images/copySeverSi.jpg',
-            imgAlt: 'Скандинавия'
-        },
-        {
-            name: 'Путь шаманов – этнографический тур по Сибири.',
-            country: 'Россия',
-            price: '70 000 руб.',
-            date: '03.03.2025',
-            imgSrc: 'images/Sibir.webp',
-            imgAlt: 'Сибирь'
-        },
-        {
-            name: 'Тропой древних цивилизаций – исторический маршрут по Греции и Италии.',
-            country: 'Греция, Италия',
-            price: '400 000 руб.',
-            date: '06.06.2025',
-            imgSrc: 'images/italy.webp',
-            imgAlt: 'Италия'
-        },
-        {
-            name: 'Сказки Востока – культурное погружение в страны Средней Азии.',
-            country: 'Казахстан',
-            price: '100 000 руб.',
-            date: '08.08.2025',
-            imgSrc: 'images/kazakhstan.jpeg',
-            imgAlt: 'Казахстан'
-        },
-        {
-            name: 'По следам викингов – морской круиз вдоль берегов Норвегии.',
-            country: 'Норвегия',
-            price: '150 000 руб.',
-            date: '10.10.2025',
-            imgSrc: 'images/norvegia.jpg',
-            imgAlt: 'викинг'
-        },
-        {
-            name: 'Тайны Атлантиды – подводные экскурсии у берегов Карибских островов.',
-            country: 'Куба',
-            price: '300 000 руб.',
-            date: '09.09.2025',
-            imgSrc: 'images/karybi.jpg',
-            imgAlt: 'Куба'
-        },
-        {
-            name: 'Сокровища пустыни – сафари-тур по Сахаре.',
-            country: 'Марокко',
-            price: '200 000 руб.',
-            date: '02.02.2025',
-            imgSrc: 'images/sahara.jpg',
-            imgAlt: 'сахара'
-        }
+    // Создаем массив с названиями popular__name в порядке их следования в HTML
+    const popularNames = [
+        "Дорога к облакам – маршрут по горным вершинам Кавказа.",
+        "В поисках Северного сияния – путешествие по северу Скандинавии.",
+        "Путь шаманов – этнографический тур по Сибири.",
+        "Тропой древних цивилизаций – исторический маршрут по Греции и Италии.",
+        "Сказки Востока – культурное погружение в страны Средней Азии.",
+        "По следам викингов – морской круиз вдоль берегов Норвегии.",
+        "Тайны Атлантиды – подводные экскурсии у берегов Карибских островов.",
+        "Сокровища пустыни – сафари-тур по Сахаре."
     ];
 
-    // Генерация элементов popular__item на основе массива
-    const popularList = document.getElementById('popular-list');
-    if (popularList) {
-        toursData.forEach(tour => {
-            const item = document.createElement('li');
-            item.className = 'popular__item';
+    // Получаем все элементы popular__item
+    const popularItem = document.querySelectorAll('.popular__item');
 
-            const nameLink = document.createElement('a');
-            nameLink.className = 'popular__name';
-            nameLink.href = '#';
-            nameLink.textContent = tour.name;
-
-            const country = document.createElement('p');
-            country.className = 'popular__country';
-            country.textContent = `Страна: ${tour.country}`;
-
-            const price = document.createElement('p');
-            price.className = 'popular__price';
-            price.textContent = `Стоимость: ${tour.price}`;
-
-            const date = document.createElement('p');
-            date.className = 'popular__date';
-            date.textContent = `Дата: ${tour.date}`;
-
-            const img = document.createElement('img');
-            img.className = 'popular__img';
-            img.src = tour.imgSrc;
-            img.alt = tour.imgAlt;
-            img.width = 270;
-
-            item.appendChild(nameLink);
-            item.appendChild(country);
-            item.appendChild(price);
-            item.appendChild(date);
-            item.appendChild(img);
-
-            popularList.appendChild(item);
-        });
+    // Проходим по массиву и заполняем карточки через for
+    for (let i = 0; i < popularItem.length; i++) {
+        const item = popularItem[i];
+        const nameElement = item.querySelector('.popular__name');
+        
+        // Устанавливаем текст из массива
+        if (nameElement && popularNames[i]) {
+            nameElement.textContent = popularNames[i];
+        }
     }
        
     const popularItems = document.querySelectorAll('.popular__item');// Получаем все элементы popular__item 
