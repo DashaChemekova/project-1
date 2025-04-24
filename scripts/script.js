@@ -1,7 +1,29 @@
 'use strict'
 
+// Предзагрузчик
+window.addEventListener('load', function() {
+    const preloader = document.querySelector('.preloader');
+    const content = document.querySelector('.content');
+    
+    // Показываем контент после загрузки страницы
+    setTimeout(function() {
+        preloader.style.opacity = '0';
+        preloader.style.visibility = 'hidden';
+        content.style.opacity = '1';
+    }, 2000); // 2 секунды задержки для демонстрации
+});
+
+// Инициализация анимации точек предзагрузчика
+function initLoaderDots() {
+    const dots = document.querySelectorAll('.dot1, .dot2, .dot3');
+    
+    dots.forEach((dot, index) => {
+        dot.style.animation = `bounce 1.5s infinite ${index * 0.2}s`;
+    });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
-    console.log('Скрипт отработал корректно');
+    initLoaderDots();//запускаю предзагрузчик
 
     // Создаем массив с текстами пунктов меню
     const menuItems = [
@@ -30,73 +52,6 @@ document.addEventListener("DOMContentLoaded", () => {
             menuContainer.innerHTML += menuItem;// Добавляем пункт в меню
         }
     }
-
-    const popularItemsData = {//объекты
-        item1: {
-            name: 'Дорога к облакам – маршрут по горным вершинам Кавказа.',
-            country: 'Россия',
-            price: '50 000 руб.',
-            date: '5.05.2025',
-            image: 'images/kavkaz.jpeg',
-            alt: 'Кавказ'
-        },
-        item2: {
-            name: 'В поисках Северного сияния – путешествие по северу Скандинавии.',
-            country: 'Норвегия, Дания, Швеция',
-            price: '200 000 руб.',
-            date: '28.12.2025',
-            image: 'images/severnoesianie.jpg',
-            alt: 'Скандинавия'
-        },
-        item3: {
-            name: 'Путь шаманов – этнографический тур по Сибири.',
-            country: 'Россия',
-            price: '70 000 руб.',
-            date: '03.03.2025',
-            image: 'images/Sibir.webp',
-            alt: 'Сибирь'
-        },
-        item4: {
-            name: 'Тропой древних цивилизаций – исторический маршрут по Греции и Италии.',
-            country: 'Греция, Италия',
-            price: '400 000 руб.',
-            date: '06.06.2025',
-            image: 'images/italy.webp',
-            alt: 'Италия'
-        },
-        item5: {
-            name: 'Сказки Востока – культурное погружение в страны Средней Азии.',
-            country: 'Казахстан',
-            price: '100 000 руб.',
-            date: '08.08.2025',
-            image: 'images/kazakhstan.jpeg',
-            alt: 'Казахстан'
-        },
-        item6: {
-            name: 'По следам викингов – морской круиз вдоль берегов Норвегии.',
-            country: 'Норвегия',
-            price: '150 000 руб.',
-            date: '10.10.2025',
-            image: 'images/norvegia.jpg',
-            alt: 'викинг'
-        },
-        item7: {
-            name: 'Тайны Атлантиды – подводные экскурсии у берегов Карибских островов.',
-            country: 'Куба',
-            price: '300 000 руб.',
-            date: '09.09.2025',
-            image: 'images/karybi.jpg',
-            alt: 'Куба'
-        },
-        item8: {
-            name: 'Сокровища пустыни – сафари-тур по Сахаре.',
-            country: 'Марокко',
-            price: '200 000 руб.',
-            date: '02.02.2025',
-            image: 'images/sahara.jpg',
-            alt: 'сахара'
-        }
-    };
     
     const tourTemplate = (item) => {// Шаблон для создания popular__item
         return `
@@ -110,103 +65,121 @@ document.addEventListener("DOMContentLoaded", () => {
         `;
     };
 
-    const popularList = document.querySelector('.popular__list');
-
-    if (popularList) {      
-        // Заполняем 
-        for (const key in popularItemsData) {
-            if (popularItemsData.hasOwnProperty(key)) {
-                const item = popularItemsData[key];
-                popularList.innerHTML += tourTemplate(item);
+    // Загрузка данных через fetch
+    fetch('data.json')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
             }
-        }
-    }
-       
-    const popularItems = document.querySelectorAll('.popular__item');// Получаем все элементы popular__item 
-    
-    popularItems.forEach(item => {// Для каждого элемента добавляем обработчики событий
-        const img = item.querySelector('.popular__img');
-        const textContainer = document.createElement('div');
-        textContainer.className = 'popular__text-container';
+            return response.json();
+        })
+        .then(data => {
+            const popularList = document.querySelector('.popular__list');
             
-        const name = item.querySelector('.popular__name');// Перемещаем текстовые элементы в новый контейнер
-        const country = item.querySelector('.popular__country');
-        const price = item.querySelector('.popular__price');
-        const date = item.querySelector('.popular__date');
-        
-        textContainer.appendChild(name);
-        textContainer.appendChild(country);
-        textContainer.appendChild(price);
-        textContainer.appendChild(date);
-        item.appendChild(textContainer);
-            
-        item.style.overflow = 'hidden';// Устанавливаем начальные стили
-        item.style.position = 'relative';
-        img.style.transition = 'transform 0.5s ease';
-        textContainer.style.position = 'absolute';
-        textContainer.style.bottom = '0';
-        textContainer.style.left = '0';
-        textContainer.style.width = '100%';
-        textContainer.style.padding = '9rem';
-        textContainer.style.backgroundColor = 'rgba(255, 255, 255, 0.9)';
-        textContainer.style.transform = 'translateY(100%)';
-        textContainer.style.transition = 'transform 0.5s ease';       
-        
-        item.addEventListener('mouseenter', () => {// мышку навели
-            img.style.transform = 'translateY(0%)';
-            textContainer.style.transform = 'translateY(0)';
+            if (popularList) {
+                popularList.innerHTML = '';
+                data.forEach(item => {
+                    popularList.innerHTML += tourTemplate(item);
+                });
+
+                initPopularItemsAnimations();
+                initCarousel(data.slice(0, 4));
+            }
+        })
+        .catch(error => {
+            console.error('Ошибка при загрузке данных:', error);
         });
+
+    function initPopularItemsAnimations() {
+        const popularItems = document.querySelectorAll('.popular__item');
         
-        item.addEventListener('mouseleave', () => {//мышку убрали
-            img.style.transform = 'translateY(0)';
+        popularItems.forEach(item => {
+            const img = item.querySelector('.popular__img');
+            const textContainer = document.createElement('div');
+            textContainer.className = 'popular__text-container';
+                
+            const name = item.querySelector('.popular__name');
+            const country = item.querySelector('.popular__country');
+            const price = item.querySelector('.popular__price');
+            const date = item.querySelector('.popular__date');
+            
+            textContainer.appendChild(name);
+            textContainer.appendChild(country);
+            textContainer.appendChild(price);
+            textContainer.appendChild(date);
+            item.appendChild(textContainer);
+                
+            item.style.overflow = 'hidden';
+            item.style.position = 'relative';
+            img.style.transition = 'transform 0.5s ease';
+            textContainer.style.position = 'absolute';
+            textContainer.style.bottom = '0';
+            textContainer.style.left = '0';
+            textContainer.style.width = '100%';
+            textContainer.style.padding = '9rem';
+            textContainer.style.backgroundColor = 'rgba(255, 255, 255, 0.9)';
             textContainer.style.transform = 'translateY(100%)';
+            textContainer.style.transition = 'transform 0.5s ease';       
+            
+            item.addEventListener('mouseenter', () => {
+                img.style.transform = 'translateY(0%)';
+                textContainer.style.transform = 'translateY(0)';
+            });
+            
+            item.addEventListener('mouseleave', () => {
+                img.style.transform = 'translateY(0)';
+                textContainer.style.transform = 'translateY(100%)';
+            });
         });
-    });
+    }
 
-    // Карусель туров
-    const carouselTrack = document.querySelector('.carousel__track');
-    const carouselSlides = Array.from(document.querySelectorAll('.popular__item')).slice(0, 4); // Первые 4 тура
-    const nextButton = document.querySelector('.carousel__button--next');
-    const prevButton = document.querySelector('.carousel__button--prev');
-    const slideWidth = 310; // Ширина слайда + отступ
+    function initCarousel(slidesData) {
+        const carouselTrack = document.querySelector('.carousel__track');
+        const nextButton = document.querySelector('.carousel__button--next');
+        const prevButton = document.querySelector('.carousel__button--prev');
+        const slideWidth = 310;
 
-    // Слайды для карусели
-    carouselSlides.forEach((slide) => {
-        
-        const tourName = slide.querySelector('.popular__name').textContent;// Получаю текст из popular__name
-        
-        const nameLink = document.createElement('a');// Создаю новую ссылку с нужным классом
-        nameLink.href = '#';
-        nameLink.className = 'carousel__slide'; // новый класс вместо popular__name
-        nameLink.textContent = tourName;
+        carouselTrack.innerHTML = '';
 
-        const imgElement = slide.querySelector('.popular__img').cloneNode(true);
-        
-        const slideContainer = document.createElement('div');// Контейнер для слайда 
-        slideContainer.className = 'carousel__slide';
-        
-        slideContainer.appendChild(imgElement);// Кидаю элементы в контейнер
-        slideContainer.appendChild(nameLink);
-        
-        carouselTrack.appendChild(slideContainer);// Добавляю контейнер в трек карусели
-    });
+        slidesData.forEach((item) => {
+            const tourName = item.name;
+            
+            const nameLink = document.createElement('a');
+            nameLink.href = '#';
+            nameLink.className = 'carousel__slide';
+            nameLink.textContent = tourName;
 
-    let currentPosition = 0;
-    const maxPosition = -(slideWidth * (carouselSlides.length - 2));
+            const imgElement = document.createElement('img');
+            imgElement.src = item.image;
+            imgElement.alt = item.alt;
+            imgElement.width = 270;
+            
+            const slideContainer = document.createElement('div');
+            slideContainer.className = 'carousel__slide';
+            
+            slideContainer.appendChild(imgElement);
+            slideContainer.appendChild(nameLink);
+            
+            carouselTrack.appendChild(slideContainer);
+        });
 
-    nextButton.addEventListener('click', () => {//клик влево
-        if (currentPosition > maxPosition) {
-            currentPosition -= slideWidth;
-            carouselTrack.style.transform = `translateX(${currentPosition}px)`;
-        }
-    });
+        let currentPosition = 0;
+        const maxPosition = -(slideWidth * (slidesData.length - 2));
 
-    prevButton.addEventListener('click', () => {//клик вправо
-        if (currentPosition < 0) {
-            currentPosition += slideWidth;
-            carouselTrack.style.transform = `translateX(${currentPosition}px)`;
-        }
-    });
+        nextButton.addEventListener('click', () => {
+            if (currentPosition > maxPosition) {
+                currentPosition -= slideWidth;
+                carouselTrack.style.transform = `translateX(${currentPosition}px)`;
+            }
+        });
+
+        prevButton.addEventListener('click', () => {
+            if (currentPosition < 0) {
+                currentPosition += slideWidth;
+                carouselTrack.style.transform = `translateX(${currentPosition}px)`;
+            }
+        });
+    }
 
     //Скролл хедера
     const header = document.querySelector('.header');
@@ -236,18 +209,17 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Кнопка "Смотреть всем"
+    // Кнопка "Смотреть все"
     const viewAllButton = document.querySelector('.popular__link');
-    const popular = document.getElementById('popular-list');
+    const toursList = document.getElementById('tours-list'); // Изменили на ID секции
 
     // Добавляем обработчик клика
-    if (viewAllButton && popular) {
+    if (viewAllButton && toursList) {
         viewAllButton.addEventListener('click', (e) => {
-            e.preventDefault(); // Предотвращаем стандартное поведение кнопки
-            
-            popular.scrollIntoView({
+            e.preventDefault();
+            toursList.scrollIntoView({
                 behavior: 'smooth',
-                block: 'start'
+                block: 'start'  
             });
         });
     }

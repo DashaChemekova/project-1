@@ -10,99 +10,109 @@
 </head>
 
 <body>
-    <header class="header container">
-    <a class="header__logo-wrap" href="index.html">
-        <img class="header__logo" src="images/logo.avif" alt="logo" width="120">
-        <H1 class="header__title">Adventure</H1>
-    </a>
-        <nav class="header__menu">
-            <ul class="menu">
-            </ul>
-        </nav>
-        <button class="header__login" type="login">Вход/регистрация</button>
-    </header>
-    <main class="main container">
+    <div class="preloader">   
+        <div class="loader">
+            <span class="dot1"></span>
+            <span class="dot2"></span>
+            <span class="dot3"></span>
+        </div>
+    </div>
+    <div class="content">
+      <header class="header container">
+            <a class="header__logo-wrap" href="index.html">
+                <img class="header__logo" src="images/logo.avif" alt="logo" width="120">
+                <H1 class="header__title">Adventure</H1>
+            </a>
+            <nav class="header__menu">
+                <ul class="menu">
+                </ul>
+            </nav>
+            <button class="header__login" type="login">Вход/регистрация</button>
+        </header>
+        <main class="main container">
 
-        <section class="about"> 
-            <h2 class="about__title" >ПУТЕШЕСТВИЯ НАЧИНАЮТСЯ ЗДЕСЬ</h2> 
-            <button class="about__catalog" type="catalog.html" id="select-tour"> Выбрать тур</button>
-    
-        </section>
+            <section class="about"> 
+                <h2 class="about__title" >ПУТЕШЕСТВИЯ НАЧИНАЮТСЯ ЗДЕСЬ</h2> 
+                <button class="about__catalog" type="catalog.html" id="select-tour"> Выбрать тур</button>
+        
+            </section>
 
-        <section class="popular">
-            <h3 class="popular__title">ПОПУЛЯРНЫЕ МАРШРУТЫ</h3>
-            
-            <div class="popular__carousel">
-                <button class="carousel__button carousel__button--prev">←</button>
-                <div class="carousel__container">
-                    <div class="carousel__track">  
-                    </div>
-                </div>
-                <button class="carousel__button carousel__button--next">→</button>
-            </div>
+            <section class="popular">
+                <h3 class="popular__title">ПОПУЛЯРНЫЕ МАРШРУТЫ</h3>
                 
-            <!-- <button class="popular__link" type="marshrut.html">Смотреть все</button> -->
-            <button class="popular__link" type="button">Смотреть все</button>
-            <ul class="popular__list">
+                <div class="popular__carousel">
+                    <button class="carousel__button carousel__button--prev">←</button>
+                    <div class="carousel__container">
+                        <div class="carousel__track">  
+                        </div>
+                    </div>
+                    <button class="carousel__button carousel__button--next">→</button>
+                </div>
+                    
+                <!-- <button class="popular__link" type="marshrut.html">Смотреть все</button> -->
+                <button class="popular__link" type="button">Смотреть все</button>
+                <ul class="popular__list" id="tours-list">
+                </ul>
+            </section>
+        
+        </main>
+        <footer class="footer container">
+            <p class="footer__author">Чемекова Дарья, Семенова Дарья; Эк-31</p>
+            <ul class="footer__list">
+                <li class="footer__item"><a class="footer__link"  href="#">Правовая оговорка</a></li>
+                <li class="footer__item"><a class="footer__link"  href="#">Пользовательское соглашение</a></li>
+                <li class="footer__item"><a class="footer__link"  href="#">Политика конфидециальности</a></li>
             </ul>
-        </section>
-    
-    </main>
-    <footer class="footer container">
-        <p class="footer__author">Чемекова Дарья, Семенова Дарья; Эк-31</p>
-        <ul class="footer__list">
-            <li class="footer__item"><a class="footer__link"  href="#">Правовая оговорка</a></li>
-            <li class="footer__item"><a class="footer__link"  href="#">Пользовательское соглашение</a></li>
-            <li class="footer__item"><a class="footer__link"  href="#">Политика конфидециальности</a></li>
-        </ul>
-        <section class="footer__form">
-            <form  class="form" action="/">
-            <input class="form__input" type="tel" name="phone" placeholder="Номер телефона" required>
-            <input class="form__input" type="password" name="password" placeholder="Пароль" required>
-            <button class="form__button" >Войти</button>
-        </form>
+            <section class="footer__form">
+                <form  class="form" action="/">
+                <input class="form__input" type="tel" name="phone" placeholder="Номер телефона" required>
+                <input class="form__input" type="password" name="password" placeholder="Пароль" required>
+                <button class="form__button" >Войти</button>
+            </form>
 
-            <form  class="form" action="/">
-            <input class="form__input" type="username" name="name" placeholder="Имя пользователя" required>
-            <input class="form__input" type="email" name="email" placeholder="Электронная почта" required>
-            <input class="form__input" type="tel" name="phone" placeholder="Номер телефона" required>
-            <input class="form__input" type="password" name="password" placeholder="Пароль" required>
-            <button class="form__button" >Зарегистрироваться</button>
-         
-        </form>
-        </section>
-    </footer>
+                <form  class="form" action="/">
+                <input class="form__input" type="username" name="name" placeholder="Имя пользователя" required>
+                <input class="form__input" type="email" name="email" placeholder="Электронная почта" required>
+                <input class="form__input" type="tel" name="phone" placeholder="Номер телефона" required>
+                <input class="form__input" type="password" name="password" placeholder="Пароль" required>
+                <button class="form__button" >Зарегистрироваться</button>
+            
+            </form>
+            </section>
+        </footer>
 
-    <div class="modal" id="auth-modal">
-        <div class="modal__content">
-            <span class="modal__close">&times;</span>
-            
-            <div class="modal__tabs">
-                <button class="modal__tab modal__tab--active" data-tab="login">Вход</button>
-                <button class="modal__tab" data-tab="register">Регистрация</button>
-            </div>
-            
-            <div class="modal__tab-content modal__tab-content--active" id="login-tab">
-                <form class="auth-form" id="login-form">
-                    <h3>Вход в аккаунт</h3>
-                    <input type="text" name="username" placeholder="Логин" required>
-                    <input type="password" name="password" placeholder="Пароль" required>
-                    <button type="submit">Войти</button>
-                </form>
-            </div>
-            
-            <div class="modal__tab-content" id="register-tab">
-                <form class="auth-form" id="register-form">
-                    <h3>Регистрация</h3>
-                    <input type="text" name="name" placeholder="Имя" required>
-                    <input type="text" name="username" placeholder="Логин" required>
-                    <input type="email" name="email" placeholder="Email" required>
-                    <input type="password" name="password" placeholder="Пароль" required>
-                    <input type="password" name="confirm-password" placeholder="Подтвердите пароль" required>
-                    <button type="submit">Зарегистрироваться</button>
-                </form>
+        <div class="modal" id="auth-modal">
+            <div class="modal__content">
+                <span class="modal__close">&times;</span>
+                
+                <div class="modal__tabs">
+                    <button class="modal__tab modal__tab--active" data-tab="login">Вход</button>
+                    <button class="modal__tab" data-tab="register">Регистрация</button>
+                </div>
+                
+                <div class="modal__tab-content modal__tab-content--active" id="login-tab">
+                    <form class="auth-form" id="login-form">
+                        <h3>Вход в аккаунт</h3>
+                        <input type="text" name="username" placeholder="Логин" required>
+                        <input type="password" name="password" placeholder="Пароль" required>
+                        <button type="submit">Войти</button>
+                    </form>
+                </div>
+                
+                <div class="modal__tab-content" id="register-tab">
+                    <form class="auth-form" id="register-form">
+                        <h3>Регистрация</h3>
+                        <input type="text" name="name" placeholder="Имя" required>
+                        <input type="text" name="username" placeholder="Логин" required>
+                        <input type="email" name="email" placeholder="Email" required>
+                        <input type="password" name="password" placeholder="Пароль" required>
+                        <input type="password" name="confirm-password" placeholder="Подтвердите пароль" required>
+                        <button type="submit">Зарегистрироваться</button>
+                    </form>
+                </div>
             </div>
         </div>
+
     </div>
 
 <script src="scripts/script.js"></script>
