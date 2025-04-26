@@ -16,3 +16,5 @@
 @import "modalWindow.css";
 /*Подключение прелоадера*/
 @import "loader.css";
+/*Слайдер*/
+@import "swipe.css";

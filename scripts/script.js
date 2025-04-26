@@ -25,6 +25,9 @@ function initLoaderDots() {
 document.addEventListener("DOMContentLoaded", () => {
     initLoaderDots();//запускаю предзагрузчик
 
+    // Проверяем, есть ли сохраненный пользователь
+    checkLoggedInUser();
+
     // Создаем массив с текстами пунктов меню
     const menuItems = [
         "О нас",
@@ -134,49 +137,46 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function initCarousel(slidesData) {
-        const carouselTrack = document.querySelector('.carousel__track');
-        const nextButton = document.querySelector('.carousel__button--next');
-        const prevButton = document.querySelector('.carousel__button--prev');
-        const slideWidth = 310;
-
-        carouselTrack.innerHTML = '';
-
-        slidesData.forEach((item) => {
-            const tourName = item.name;
-            
-            const nameLink = document.createElement('a');
-            nameLink.href = '#';
-            nameLink.className = 'carousel__slide';
-            nameLink.textContent = tourName;
-
-            const imgElement = document.createElement('img');
-            imgElement.src = item.image;
-            imgElement.alt = item.alt;
-            imgElement.width = 270;
-            
-            const slideContainer = document.createElement('div');
-            slideContainer.className = 'carousel__slide';
-            
-            slideContainer.appendChild(imgElement);
-            slideContainer.appendChild(nameLink);
-            
-            carouselTrack.appendChild(slideContainer);
-        });
-
-        let currentPosition = 0;
-        const maxPosition = -(slideWidth * (slidesData.length - 2));
-
-        nextButton.addEventListener('click', () => {
-            if (currentPosition > maxPosition) {
-                currentPosition -= slideWidth;
-                carouselTrack.style.transform = `translateX(${currentPosition}px)`;
-            }
-        });
-
-        prevButton.addEventListener('click', () => {
-            if (currentPosition < 0) {
-                currentPosition += slideWidth;
-                carouselTrack.style.transform = `translateX(${currentPosition}px)`;
+        const carouselContainer = document.querySelector('.carousel__container');
+        carouselContainer.innerHTML = `
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                    ${slidesData.map(item => `
+                        <div class="swiper-slide">
+                            <img src="${item.image}" alt="${item.alt}" width="270">
+                            <a href="#">${item.name}</a>
+                        </div>
+                    `).join('')}
+                </div>
+                <!-- Классы к кнопкам -->
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+            </div>
+        `;
+    
+        // Swiper
+        const swiper = new Swiper('.swiper-container', {
+            slidesPerView: 3, // Количество видимых слайдов
+            spaceBetween: 30, // Расстояние между слайдами
+            loop: true, // Бесконечная прокрутка
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            breakpoints: {
+                // Адаптивность для разных экранов
+                320: {
+                    slidesPerView: 1,
+                    spaceBetween: 10
+                },
+                768: {
+                    slidesPerView: 2,
+                    spaceBetween: 20
+                },
+                1024: {
+                    slidesPerView: 3,
+                    spaceBetween: 30
+                }
             }
         });
     }
@@ -233,28 +233,46 @@ document.addEventListener("DOMContentLoaded", () => {
     const loginForm = document.getElementById('login-form');
     const registerForm = document.getElementById('register-form');
 
+    // Проверяем, есть ли сохраненный пользователь
+    function checkLoggedInUser() {
+        const user = JSON.parse(localStorage.getItem('user'));
+        const loginButton = document.querySelector('.header__login');
+        
+        if (user && loginButton) {
+            loginButton.textContent = user.username;
+            loginButton.classList.add('header__login--logged-in');
+        }
+    }
     
     if (loginButton) {// Открытие модального окна
         loginButton.addEventListener('click', () => {
-            modal.style.display = 'block';
+            const user = JSON.parse(localStorage.getItem('user'));
+            
+            if (user) {
+                // Если пользователь уже вошел, предлагаем выход
+                if (confirm(`Вы хотите выйти из аккаунта ${user.username}?`)) {
+                    localStorage.removeItem('user');
+                    loginButton.textContent = 'Вход/регистрация';
+                    loginButton.classList.remove('header__login--logged-in');
+                }
+            } else {
+                modal.style.display = 'block';
+            }
         });
     }
 
-    
     if (closeButton) {
         closeButton.addEventListener('click', () => {// Закрытие модального окна
             modal.style.display = 'none';
         });
     }
 
-    
     window.addEventListener('click', (e) => {// Закрытие при клике вне модального окна
         if (e.target === modal) {
             modal.style.display = 'none';
         }
     });
 
-    
     tabs.forEach(tab => {// Переключение между вкладками
         tab.addEventListener('click', () => {
             // Убираем активный класс у всех вкладок и контента
@@ -268,20 +286,32 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    
     if (loginForm) {// Обработка формы входа
         loginForm.addEventListener('submit', (e) => {
             e.preventDefault();
             const username = loginForm.elements.username.value;
             const password = loginForm.elements.password.value;
             
-            alert(`Добро пожаловать, ${username}! Вы успешно авторизовались.`);
-            modal.style.display = 'none';
-            loginForm.reset();
+            // Проверяем наличие пользователя в localStorage
+            const user = JSON.parse(localStorage.getItem('user'));
+            
+            if (user && user.username === username && user.password === password) {
+                alert(`Добро пожаловать, ${username}! Вы успешно авторизовались.`);
+                modal.style.display = 'none';
+                loginForm.reset();
+                
+                // Обновляем кнопку входа
+                const loginButton = document.querySelector('.header__login');
+                if (loginButton) {
+                    loginButton.textContent = username;
+                    loginButton.classList.add('header__login--logged-in');
+                }
+            } else {
+                alert('Неверное имя пользователя или пароль!');
+            }
         });
     }
 
-    
     if (registerForm) {// Обработка формы регистрации
         registerForm.addEventListener('submit', (e) => {
             e.preventDefault();
@@ -297,10 +327,26 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
             
+            // Сохраняем пользователя в localStorage
+            const user = {
+                name,
+                username,
+                email,
+                password
+            };
+            
+            localStorage.setItem('user', JSON.stringify(user));
+            
             alert(`Поздравляем, ${name}! Вы успешно зарегистрировались.`);
             modal.style.display = 'none';
             registerForm.reset();
+            
+            // Обновляем кнопку входа
+            const loginButton = document.querySelector('.header__login');
+            if (loginButton) {
+                loginButton.textContent = username;
+                loginButton.classList.add('header__login--logged-in');
+            }
         });
     }
-}
-);
+});

@@ -166,16 +166,6 @@
     object-fit: cover;
 }
 
-.carousel__slide a {
-    font-size: 18px;
-    color: #333;
-    text-decoration: none;
-    text-align: center;
-    margin-right: 0px;
-    border-radius: 0;
-    box-shadow: none;
-}
-
 .carousel__slide h4 {
     margin: 15px 15px 5px;
     font-size: 18px;
@@ -186,25 +176,6 @@
     margin: 0 15px 15px;
     color: #666;
     font-size: 14px;
-}
-
-.carousel__button {
-    background: rgb(62, 120, 167);
-    color: white;
-    border: none;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    cursor: pointer;
-    font-size: 18px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: 0.3s;
-}
-
-.carousel__button:hover {
-    background: rgb(129, 174, 211);
 }
 
 .about{
